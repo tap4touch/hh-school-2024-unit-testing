@@ -134,12 +134,15 @@ public class LibraryManagerTest {
                 .doubleValue(), fee);
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {-1024, -906, -17, -1})
-    void testCalculateDynamicLateFeeZeroAndBelowZeroDays(int overdueDays) {
+    @Test
+    void testCalculateDynamicLateFeeZeroDays() {
         double fee = libraryManager.calculateDynamicLateFee(0, false, false);
         assertEquals(0, fee);
+    }
 
+    @ParameterizedTest
+    @ValueSource(ints = {-1024, -906, -17, -1})
+    void testCalculateDynamicLateFeeBelowZeroDays(int overdueDays) {
         assertThrows(IllegalArgumentException.class,
                 () -> libraryManager.calculateDynamicLateFee(overdueDays, false, false));
     }
